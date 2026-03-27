@@ -49,7 +49,6 @@
   .dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--muted2); flex-shrink: 0; transition: all 0.15s; }
   .ol { font-size: 14px; color: var(--text); }
   .nav { display: flex; justify-content: space-between; align-items: center; }
-  .btns { display: flex; gap: 8px; }
   .btn { padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid var(--border2); background: transparent; color: var(--muted); transition: all 0.15s; }
   .btn:hover { background: var(--surface2); color: var(--text); }
   .btn.p { background: var(--accent); border-color: var(--accent); color: #000; }
@@ -91,7 +90,7 @@
   .community-btn:hover { background: #d4f514; }
   .restart { margin-top: 1.25rem; display: inline-block; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
   .restart:hover { color: var(--text); }
-  .err { display: none; padding: 1rem; background: rgba(220,50,50,0.1); border: 1px solid rgba(220,50,50,0.2); border-radius: 8px; font-size: 13px; color: #ff7070; margin-bottom: 1rem; }
+  .err { display: none; padding: 1rem; background: rgba(220,50,50,0.1); border: 1px solid rgba(220,50,50,0.2); border-radius: 8px; font-size: 13px; color: #ff7070; margin-bottom: 1rem; white-space: pre-wrap; word-break: break-word; }
   @media(max-width: 480px) { .weeks-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -101,6 +100,7 @@
   <h1>Find Your<br><em>Game.</em></h1>
   <p class="intro">Answer 7 questions and get a personalised guard, passing game, and 4-week plan built for how you train.</p>
   <div class="progress-bar"><div class="progress-fill" id="prog" style="width:14%"></div></div>
+
   <div id="qa">
     <div class="step on" id="s0">
       <p class="qnum">Question 1 of 7</p>
@@ -112,6 +112,7 @@
       </div>
       <div class="nav"><span></span><button class="btn p" onclick="nx(0)">Next</button></div>
     </div>
+
     <div class="step" id="s1">
       <p class="qnum">Question 2 of 7</p>
       <p class="ql">How would you describe your style?</p>
@@ -122,6 +123,7 @@
       </div>
       <div class="nav"><button class="btn" onclick="pv(1)">Back</button><button class="btn p" onclick="nx(1)">Next</button></div>
     </div>
+
     <div class="step" id="s2">
       <p class="qnum">Question 3 of 7</p>
       <p class="ql">What best describes your physical attributes?</p>
@@ -133,6 +135,7 @@
       </div>
       <div class="nav"><button class="btn" onclick="pv(2)">Back</button><button class="btn p" onclick="nx(2)">Next</button></div>
     </div>
+
     <div class="step" id="s3">
       <p class="qnum">Question 4 of 7</p>
       <p class="ql">What's your biggest problem on the mat right now?</p>
@@ -144,6 +147,7 @@
       </div>
       <div class="nav"><button class="btn" onclick="pv(3)">Back</button><button class="btn p" onclick="nx(3)">Next</button></div>
     </div>
+
     <div class="step" id="s4">
       <p class="qnum">Question 5 of 7</p>
       <p class="ql">How long have you been training?</p>
@@ -155,6 +159,7 @@
       </div>
       <div class="nav"><button class="btn" onclick="pv(4)">Back</button><button class="btn p" onclick="nx(4)">Next</button></div>
     </div>
+
     <div class="step" id="s5">
       <p class="qnum">Question 6 of 7</p>
       <p class="ql">How often do you train each week?</p>
@@ -165,6 +170,7 @@
       </div>
       <div class="nav"><button class="btn" onclick="pv(5)">Back</button><button class="btn p" onclick="nx(5)">Next</button></div>
     </div>
+
     <div class="step" id="s6">
       <p class="qnum">Question 7 of 7</p>
       <p class="ql">What's your main goal right now?</p>
@@ -178,22 +184,29 @@
       <div class="nav"><button class="btn" onclick="pv(6)">Back</button><button class="btn p" onclick="build()">Build my game plan</button></div>
     </div>
   </div>
+
   <div class="loader" id="ldr">
     <div class="spin"></div>
     <p>Building your personalised game plan...</p>
   </div>
+
   <div class="err" id="err">Something went wrong — please try again.</div>
+
   <div class="res" id="res">
     <div class="result-header">
       <p class="section-label">Your recommended game</p>
       <div class="result-title" id="r-title"></div>
       <div class="tags" id="r-tags"></div>
     </div>
+
     <div class="card" id="r-guard"></div>
     <div class="card" id="r-pass"></div>
+
     <p class="section-label" style="margin-bottom:8px">Your 4-week plan</p>
     <div class="weeks-grid" id="r-weeks"></div>
+
     <div class="tip-card" id="r-tip"></div>
+
     <div class="community">
       <p class="community-eyebrow">Want to work with me?</p>
       <p class="community-title">More progress.<br>Same mat time.</p>
@@ -207,48 +220,60 @@
       </ul>
       <a class="community-btn" href="https://ig.me/m/babarraja1" target="_blank">DM me on Instagram</a>
     </div>
+
     <button class="restart" onclick="reset()">Start over</button>
   </div>
 </div>
+
 <script>
-const ans={};
-const progW=[14,28,42,57,71,85,100];
-document.querySelectorAll('.opts').forEach(g=>{
-  g.querySelectorAll('.opt').forEach(o=>{
-    o.addEventListener('click',()=>{
-      g.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+const ans = {};
+const progW = [14, 28, 42, 57, 71, 85, 100];
+
+document.querySelectorAll('.opts').forEach(g => {
+  g.querySelectorAll('.opt').forEach(o => {
+    o.addEventListener('click', () => {
+      g.querySelectorAll('.opt').forEach(x => x.classList.remove('sel'));
       o.classList.add('sel');
-      ans[g.dataset.q]=o.dataset.v;
+      ans[g.dataset.q] = o.dataset.v;
     });
   });
 });
-function nx(i){
-  if(!ans[i])return;
-  document.getElementById('s'+i).classList.remove('on');
-  document.getElementById('s'+(i+1)).classList.add('on');
-  document.getElementById('prog').style.width=progW[i+1]+'%';
+
+function nx(i) {
+  if (!ans[i]) return;
+  document.getElementById('s' + i).classList.remove('on');
+  document.getElementById('s' + (i + 1)).classList.add('on');
+  document.getElementById('prog').style.width = progW[i + 1] + '%';
 }
-function pv(i){
-  document.getElementById('s'+i).classList.remove('on');
-  document.getElementById('s'+(i-1)).classList.add('on');
-  document.getElementById('prog').style.width=progW[i-1]+'%';
+
+function pv(i) {
+  document.getElementById('s' + i).classList.remove('on');
+  document.getElementById('s' + (i - 1)).classList.add('on');
+  document.getElementById('prog').style.width = progW[i - 1] + '%';
 }
-function reset(){
-  Object.keys(ans).forEach(k=>delete ans[k]);
-  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
-  document.getElementById('res').style.display='none';
-  document.getElementById('err').style.display='none';
-  document.getElementById('qa').style.display='block';
-  document.getElementById('prog').style.width='14%';
-  for(let i=0;i<7;i++) document.getElementById('s'+i).classList.remove('on');
+
+function reset() {
+  Object.keys(ans).forEach(k => delete ans[k]);
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('sel'));
+  document.getElementById('res').style.display = 'none';
+  document.getElementById('err').style.display = 'none';
+  document.getElementById('err').textContent = 'Something went wrong — please try again.';
+  document.getElementById('qa').style.display = 'block';
+  document.getElementById('ldr').style.display = 'none';
+  document.getElementById('prog').style.width = '14%';
+  for (let i = 0; i < 7; i++) document.getElementById('s' + i).classList.remove('on');
   document.getElementById('s0').classList.add('on');
 }
-async function build(){
-  if(!ans[6])return;
-  document.getElementById('qa').style.display='none';
-  document.getElementById('ldr').style.display='block';
-  document.getElementById('err').style.display='none';
-  const prompt=`You are an expert BJJ coach building a personalised game plan for a student.
+
+async function build() {
+  if (!ans[6]) return;
+
+  document.getElementById('qa').style.display = 'none';
+  document.getElementById('ldr').style.display = 'block';
+  document.getElementById('err').style.display = 'none';
+  document.getElementById('err').textContent = '';
+
+  const prompt = `You are an expert BJJ coach building a personalised game plan for a student.
 Student profile:
 - Game preference: ${ans[0]}
 - Style: ${ans[1]}
@@ -257,31 +282,80 @@ Student profile:
 - Experience: ${ans[4]}
 - Training frequency: ${ans[5]}
 - Main goal: ${ans[6]}
-Recommend ONE guard style and ONE passing style from the full range of BJJ that best fits this player. For each, give 3 key techniques with a brief learning point. Provide a 4-week progression and one key coaching tip.
+
+Recommend ONE guard style and ONE passing style from the full range of BJJ that best fits this player.
+For each, give 3 key techniques with a brief learning point.
+Provide a 4-week progression and one key coaching tip.
+
 Return ONLY valid JSON, no markdown:
 {"guard":"Guard name","guardWhy":"1-2 sentences why this guard suits them","guardTechniques":[{"name":"name","point":"one key learning point max 15 words"},{"name":"name","point":"one key learning point max 15 words"},{"name":"name","point":"one key learning point max 15 words"}],"pass":"Pass name","passWhy":"1-2 sentences why this pass suits them","passTechniques":[{"name":"name","point":"one key learning point max 15 words"},{"name":"name","point":"one key learning point max 15 words"},{"name":"name","point":"one key learning point max 15 words"}],"weeks":[{"week":1,"focus":"short title","detail":"one sentence drill focus"},{"week":2,"focus":"short title","detail":"one sentence drill focus"},{"week":3,"focus":"short title","detail":"one sentence drill focus"},{"week":4,"focus":"short title","detail":"one sentence drill focus"}],"tip":"One specific actionable coaching tip for this player"}`;
-  try{
-    const r=await fetch('https://bjj-api-proxy.babar11raja.workers.dev',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:prompt}]})
+
+  try {
+    const r = await fetch('https://bjj-api-proxy.babar11raja.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: prompt }]
+      })
     });
-    const d=await r.json();
-    const txt=d.content.map(x=>x.text||'').join('');
-    const p=JSON.parse(txt.replace(/```json|```/g,'').trim());
-    document.getElementById('r-title').innerHTML=`${p.guard} <span>+</span> ${p.pass}`;
-    document.getElementById('r-tags').innerHTML=`<span class="tag">${p.guard}</span><span class="tag">${p.pass}</span>`;
-    document.getElementById('r-guard').innerHTML=`<p class="card-title">${p.guard}</p><p class="card-body">${p.guardWhy}</p><ul class="tlist">${p.guardTechniques.map(t=>`<li><strong>${t.name}</strong>${t.point}</li>`).join('')}</ul>`;
-    document.getElementById('r-pass').innerHTML=`<p class="card-title">${p.pass}</p><p class="card-body">${p.passWhy}</p><ul class="tlist">${p.passTechniques.map(t=>`<li><strong>${t.name}</strong>${t.point}</li>`).join('')}</ul>`;
-    document.getElementById('r-weeks').innerHTML=p.weeks.map(w=>`<div class="week"><p class="week-num">Week ${w.week}</p><p class="week-focus">${w.focus}</p><p class="week-detail">${w.detail}</p></div>`).join('');
-    document.getElementById('r-tip').innerHTML=`<p class="section-label">Coaching tip</p><p class="card-body">${p.tip}</p>`;
-    document.getElementById('ldr').style.display='none';
-    document.getElementById('res').style.display='block';
-    window.scrollTo({top:0,behavior:'smooth'});
-  }catch(e){
-    document.getElementById('ldr').style.display='none';
-    document.getElementById('err').style.display='block';
-    document.getElementById('qa').style.display='block';
+
+    const raw = await r.text();
+
+    let d;
+    try {
+      d = JSON.parse(raw);
+    } catch (parseErr) {
+      throw new Error('Invalid JSON from Worker: ' + raw.slice(0, 500));
+    }
+
+    if (!r.ok) {
+      const apiMessage =
+        d?.error?.message ||
+        d?.error ||
+        d?.message ||
+        raw;
+      throw new Error(apiMessage);
+    }
+
+    if (!d.content || !Array.isArray(d.content)) {
+      throw new Error('Unexpected Anthropic response: ' + raw.slice(0, 500));
+    }
+
+    const txt = d.content.map(x => x.text || '').join('').trim();
+
+    let p;
+    try {
+      p = JSON.parse(txt.replace(/```json|```/g, '').trim());
+    } catch (parseErr) {
+      throw new Error('Model returned invalid JSON: ' + txt.slice(0, 500));
+    }
+
+    document.getElementById('r-title').innerHTML = `${p.guard} <span>+</span> ${p.pass}`;
+    document.getElementById('r-tags').innerHTML = `<span class="tag">${p.guard}</span><span class="tag">${p.pass}</span>`;
+
+    document.getElementById('r-guard').innerHTML =
+      `<p class="card-title">${p.guard}</p><p class="card-body">${p.guardWhy}</p><ul class="tlist">${(p.guardTechniques || []).map(t => `<li><strong>${t.name}</strong>${t.point}</li>`).join('')}</ul>`;
+
+    document.getElementById('r-pass').innerHTML =
+      `<p class="card-title">${p.pass}</p><p class="card-body">${p.passWhy}</p><ul class="tlist">${(p.passTechniques || []).map(t => `<li><strong>${t.name}</strong>${t.point}</li>`).join('')}</ul>`;
+
+    document.getElementById('r-weeks').innerHTML =
+      (p.weeks || []).map(w => `<div class="week"><p class="week-num">Week ${w.week}</p><p class="week-focus">${w.focus}</p><p class="week-detail">${w.detail}</p></div>`).join('');
+
+    document.getElementById('r-tip').innerHTML =
+      `<p class="section-label">Coaching tip</p><p class="card-body">${p.tip}</p>`;
+
+    document.getElementById('ldr').style.display = 'none';
+    document.getElementById('res').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  } catch (e) {
+    document.getElementById('ldr').style.display = 'none';
+    document.getElementById('err').style.display = 'block';
+    document.getElementById('err').textContent = e.message || 'Something went wrong — please try again.';
+    document.getElementById('qa').style.display = 'block';
   }
 }
 </script>
