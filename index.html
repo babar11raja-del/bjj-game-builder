@@ -78,20 +78,73 @@
   .week-detail { font-size: 12px; color: var(--muted); line-height: 1.5; }
   .tip-card { background: var(--accent-dim); border: 1px solid rgba(200,240,0,0.2); border-radius: 10px; padding: 1.25rem; margin-bottom: 10px; }
   .tip-card .card-body { color: #c8f000cc; }
+
   .community { background: var(--surface); border: 1px solid rgba(200,240,0,0.25); border-radius: 10px; padding: 1.5rem; margin-top: 4px; }
   .community-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 8px; }
   .community-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 0.02em; line-height: 1.05; color: var(--text); margin-bottom: 10px; }
   .community-hook { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.65; }
-  .community-list { list-style: none; margin-bottom: 1.25rem; }
-  .community-list li { font-size: 13px; color: var(--muted); padding: 5px 0; display: flex; align-items: baseline; gap: 8px; line-height: 1.5; }
-  .community-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 5px; }
-  .community-list li strong { color: var(--text); font-weight: 500; }
-  .community-btn { display: inline-block; padding: 11px 24px; background: var(--accent); color: #000; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; transition: background 0.15s; }
+
+  .community-list {
+    list-style: none;
+    margin-bottom: 1.25rem;
+    padding-left: 0;
+  }
+
+  .community-list li {
+    position: relative;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding: 0 0 0 18px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .community-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .community-list li strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .community-proof-heading {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 18px 0 10px;
+  }
+
+  .community-btn {
+    display: inline-block;
+    padding: 11px 24px;
+    background: var(--accent);
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
   .community-btn:hover { background: #d4f514; }
+
   .restart { margin-top: 1.25rem; display: inline-block; font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
   .restart:hover { color: var(--text); }
   .err { display: none; padding: 1rem; background: rgba(220,50,50,0.1); border: 1px solid rgba(220,50,50,0.2); border-radius: 8px; font-size: 13px; color: #ff7070; margin-bottom: 1rem; white-space: pre-wrap; word-break: break-word; }
-  @media(max-width: 480px) { .weeks-grid { grid-template-columns: 1fr; } }
+
+  @media(max-width: 480px) {
+    .weeks-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -211,6 +264,7 @@
       <p class="community-eyebrow">Want to work with me?</p>
       <p class="community-title">More progress.<br>Same mat time.</p>
       <p class="community-hook">Most players stay stuck not because they train too little — but because they don't have a system. If you're tired of feeling overwhelmed, spinning your wheels, and not seeing the progress your mat time deserves, this is for you.</p>
+
       <ul class="community-list">
         <li><strong>Personalised training plans</strong> — every session has a clear purpose</li>
         <li><strong>Weekly sparring &amp; technique reviews</strong> — direct feedback on your actual game</li>
@@ -218,7 +272,14 @@
         <li><strong>S&amp;C built for BJJ</strong> — get stronger where it matters on the mat</li>
         <li><strong>Accountability check-ins</strong> — so you follow through and keep progressing</li>
       </ul>
-      <a class="community-btn" href="https://ig.me/m/babarraja1" target="_blank">Tap Here & DM me 'Train' to get started </a>
+
+      <p class="community-proof-heading">Wins from the community</p>
+      <ul class="community-list">
+        <li>Esa followed the system went from white to blue belt in 13 months, then went on to win the IBJJF London Open at adult blue belt</li>
+        <li>Igor was on the programme a year, earned his brown belt and went on to win silver twice at the IBJJF London Open at adult brown belt soon after</li>
+      </ul>
+
+      <a class="community-btn" href="https://ig.me/m/babarraja1" target="_blank">Tap Here &amp; DM me 'Train' to get started</a>
     </div>
 
     <button class="restart" onclick="reset()">Start over</button>
